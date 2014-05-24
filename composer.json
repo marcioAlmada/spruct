@@ -1,0 +1,24 @@
+{
+    "name": "spruct/spruct",
+    "type": "library",
+    "description": "PHP structs with optional pseudo strong typed fields",
+    "keywords": ["struct", "data", "type", "standard"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Márcio Almada",
+            "email": "marcio.web2@gmail.com",
+            "homepage": "http://github.com/marcioAlmada/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "ext-json":"*",
+        "minime/annotations": "~1.12"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spruct\\": "src/"
+        }
+    }
+}
