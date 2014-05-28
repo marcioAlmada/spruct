@@ -41,7 +41,7 @@ class Behaviors
         return $value;
     }
 
-    private static function getPropertyType(Struct $struct, $property)
+    public static function getPropertyType(Struct $struct, $property)
     {
         $type = Meta::getPropertyAnnotations($struct, $property)->get('struct.type');
 
