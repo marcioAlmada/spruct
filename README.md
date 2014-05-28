@@ -32,7 +32,7 @@ A new struct type can be created by extending the abstract `\Spruct\Struct` clas
 
 ```php
 /**
- * A 2D point class
+ * Struct representing a 2D point
  */
 class D2Point extends \Spruct\Struct
 {
@@ -48,7 +48,7 @@ class D2Point extends \Spruct\Struct
 ```
 
 Fields are declared through protected properties and data types are specified
-through a custom annotation:
+through the `@struct.type` property annotation:
 
 ```php
 /**
@@ -81,7 +81,7 @@ $point = new D2Point([
 
 ### Manipulating Structs
 
-Structs are manipulated just like a common `\stdClass` object:
+Structs can be manipulated just like a common `\stdClass` object:
 
 ```php
 $pointA = new D2Point();
@@ -93,12 +93,14 @@ $pointA->y = 1.5;
 Erros are represented by a `\Spruct\StructException`. Struct exception messages are pretty self explanatory:
 
 ```php
-$pointB->visible = 'y' // Cannot use string(y) as type float in field y
+$pointB->visible = 'y' // Cannot use string(y) as type float in field visible
 $pointB->x = 1         // Cannot use integer(1) as type float in field x
 $pointB->y = []        // Cannot use array as type float in field y
 ```
 
 ### Required Fields
+
+You can also declare fields that must not be null using `@struct.requires` class annotation:
 
 ```php
 /**
@@ -114,11 +116,13 @@ class Employee extends \Spruct\Struct
 }
 ```
 
-Required fields are validated during struct initialization. Following example throws a `\Spruct\StructException`:
+Required fields are validated during struct initialization:
 
 ```php
 new Employee(["age" => 21]) // Cannot initialize Employee with a null name
 ```
+
+The example above throws a `\Spruct\StructException` informing what fields must be present upon instantiation.
 
 ## Contributing
  
