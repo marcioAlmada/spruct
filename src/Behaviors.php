@@ -25,9 +25,10 @@ class Behaviors
 
     public static function validateField(Struct $struct, $property)
     {
-        if( ! property_exists($struct, $property))
+        if ( ! property_exists($struct, $property)) {
             throw new StructException(
                 sprintf(self::FIELD_ERROR, get_class($struct), $property));
+        }
     }
 
     public static function strict(Struct $struct, $property, $value)
@@ -51,9 +52,13 @@ class Behaviors
     public static function findTypeToken($type)
     {
         if ( null !== $type && is_string($type)) {
-            if(false !== strpos($type, '\\')) return $type;
+            if (false !== strpos($type, '\\')) {
+                return $type;
+            }
             foreach (static::$types as $token => $types) {
-                if (in_array($type, $types)) return $token;
+                if (in_array($type, $types)) {
+                    return $token;
+                }
             }
 
             throw new StructException(
@@ -69,10 +74,11 @@ class Behaviors
     public static function getRequirements(Struct $struct)
     {
         $requirements = Meta::getClassAnnotations($struct)->get('struct.requires');
-        if (is_string($requirements))
+        if (is_string($requirements)) {
             $requirements = array_map('trim', explode(',', $requirements));
-        else
+        } else {
             $requirements = [];
+        }
 
         return $requirements;
     }
@@ -80,20 +86,20 @@ class Behaviors
     public static function validatePropertyType($expected, $property, $value)
     {
         $type = gettype($value);
-        
-        if('object' === $type) {
+
+        if ('object' === $type) {
             if (0 !== strpos($expected, '\\')) {
                 $expected =  '\\' . $expected;
             }
         }
 
-        if($value instanceof $expected || $type === $expected) {
+        if ($value instanceof $expected || $type === $expected) {
             return true;
         }
 
         if (is_scalar($value)) {
             $type .= "({$value})";
-        } else if (is_object($value)) {
+        } elseif (is_object($value)) {
             $type .= '(' . get_class($value) . ')';
         }
 
@@ -105,9 +111,10 @@ class Behaviors
     {
         $requirements = Behaviors::getRequirements($struct);
         array_walk($requirements, function ($field) use ($struct) {
-            if ($struct->__get($field) === null)
+            if ($struct->__get($field) === null) {
                 throw new StructException(
                     sprintf(self::REQUIREMENT_ERROR, get_class($struct), $field));
+            }
         });
     }
 }

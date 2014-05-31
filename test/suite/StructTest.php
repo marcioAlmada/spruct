@@ -17,7 +17,8 @@ class StructTest extends \PHPUnit_Framework_TestCase
 
     protected $struct;
 
-    public function setup() {
+    public function setup()
+    {
         $this->struct = new Point();
     }
 
@@ -79,7 +80,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
             ['visible', 1],
             ['visible', 'yes'],
             ['visible', ''], // empty string
-            ['visible', 'some # random % !    (string)'], // empty string
+            ['visible', 'some # random % !    (string) '], // empty string
             ['x', 1],
             ['y', 0],
             ['group', 1.0],
