@@ -70,7 +70,7 @@ through the `@struct.type` property annotation:
 
 ### Initializing Structs
 
-Structs can be initialized with a key value array prototype:
+Structs can be initialized with a key value array prototype, like this:
 
 ```php
 $point = new D2Point([
@@ -81,7 +81,7 @@ $point = new D2Point([
 
 ### Manipulating Structs
 
-Structs can be manipulated just like a common `\stdClass` object:
+Structs can be manipulated just like a common `\stdClass` instance:
 
 ```php
 $pointA = new D2Point();
@@ -90,12 +90,12 @@ $pointA->x = 1.0;
 $pointA->y = 1.5;
 ```
 
-Erros are represented by a `\Spruct\StructException`. Struct exception messages are pretty self explanatory:
+Struct exception messages are pretty self explanatory `\Spruct\StructException`:
 
 ```php
-$pointB->visible = 'y' // Cannot use string(y) as type float in field visible
-$pointB->x = 1         // Cannot use integer(1) as type float in field x
-$pointB->y = []        // Cannot use array as type float in field y
+$pointB->visible = 'y' // Exception: Cannot use string(y) as type float in field visible
+$pointB->x = 1         // Exception: Cannot use integer(1) as type float in field x
+$pointB->y = []        // Exception: Cannot use array as type float in field y
 ```
 
 ### Required Fields
@@ -116,22 +116,22 @@ class Employee extends \Spruct\Struct
 }
 ```
 
-Required fields are validated during struct initialization:
+Required fields are validated during struct initialization.
+If required fields are missing, a `\Spruct\StructException` is thrown.
 
 ```php
-new Employee(["age" => 21]) // Cannot initialize Employee with a null name
+new Employee(["age" => 21]) // Exception: Cannot initialize Employee with a null name
 ```
-
-The example above throws a `\Spruct\StructException` informing what fields must be present upon instantiation.
 
 ## Contributing
  
-0. Fork [spruct\spruct](https://github.com/marcioAlmada/spruct/fork)
-0. Clone forked repository
+0. Fork [spruct\spruct](https://github.com/marcioAlmada/spruct/fork) and clone
 0. Install composer dependencies `$ composer install`
-0. Run unit tests `$ phpunit`
+0. Run unit tests with phpunit 4.2+
 0. Modify code: correct bug, implement feature
-0. Back to step 4
+0. Back to step 3
+
+> NOTICE: phpunit 4.2+ is required due to a feature introduced [here](https://github.com/sebastianbergmann/phpunit/issues/1263)
 
 ## Copyright
 
