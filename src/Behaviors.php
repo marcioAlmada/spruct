@@ -70,7 +70,7 @@ class Behaviors
     {
         $requirements = Meta::getClassAnnotations($struct)->get('struct.requires');
         if (is_string($requirements))
-            $requirements = explode(',', preg_replace('#\s#', '', $requirements));
+            $requirements = array_map('trim', explode(',', $requirements));
         else
             $requirements = [];
 
