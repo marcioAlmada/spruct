@@ -100,7 +100,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider propotypeProvider
+     * @dataProvider missingPropotypeFieldProvider
      * @expectedException \Spruct\StructException
      * @expectedExceptionMessage #^Cannot initialize ((\\?\w)+) with a null \w+$#
      */
@@ -109,12 +109,34 @@ class StructTest extends \PHPUnit_Framework_TestCase
         $this->struct = new StructWithRequirement($prototype);
     }
 
-    public function propotypeProvider()
+    public function missingPropotypeFieldProvider()
     {
         return [
             [[]],
             [['description' => 'foo']],
             [['name' => 'bar']],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidPrototypeDataProvider
+     * @expectedException \Spruct\StructException
+     * @expectedExceptionMessage #^Cannot use ((\\?\w)+)(\(.{0,}\))? as type (?1) in field \w+$#
+     */
+    public function testRequiredFieldType($prototype)
+    {
+        $this->struct = new StructWithRequirement($prototype);
+    }
+
+    public function invalidPrototypeDataProvider()
+    {
+        return [
+            [['name' => 'valid', 'description' => false]],
+            [['name' => 'valid', 'description' => 0]],
+            [['name' => 'valid', 'description' => .5]],
+            [['name' => true, 'description' => 'valid']],
+            [['name' => 1,    'description' => 'valid']],
+            [['name' => 1.1,  'description' => 'valid']],
         ];
     }
 }
