@@ -39,6 +39,7 @@ class Behaviors
     {
         static::validateField($struct, $property);
         $type = static::getPropertyType($struct, $property);
+        $property = get_class($struct) . '->' . $property;
         if (null !== $type) {
             static::validatePropertyType($type, $property, $value);
         }

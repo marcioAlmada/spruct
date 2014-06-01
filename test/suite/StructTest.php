@@ -66,7 +66,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Spruct\StructException
-     * @expectedExceptionMessage #^Cannot use ((\\?\w)+)(\(.{0,}\))? as type (?1) in field \w+$#
+     * @expectedExceptionMessage #^Cannot use ((\\?\w)+)(\(.{0,}\))? as type (?1) in field (?1)->\w+$#
      * @dataProvider fieldAssignmentExceptionProvider
      */
     public function testFieldAssignmentException($property, $value)
@@ -122,7 +122,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider invalidPrototypeDataProvider
      * @expectedException \Spruct\StructException
-     * @expectedExceptionMessage #^Cannot use ((\\?\w)+)(\(.{0,}\))? as type (?1) in field \w+$#
+     * @expectedExceptionMessage #^Cannot use ((\\?\w)+)(\(.{0,}\))? as type (?1) in field (?1)->\w+$#
      */
     public function testRequiredFieldType($prototype)
     {
