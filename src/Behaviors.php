@@ -21,7 +21,7 @@ class Behaviors
 
     const TYPE_ERROR  = 'Annotated type must be in %s';
 
-    const REQUIREMENT_ERROR  = 'Cannot initialize %s with a null %s';
+    const REQUIREMENT_ERROR  = 'Cannot initialize %s with null %s';
 
     public static function validateField(Struct $struct, $property)
     {
@@ -110,11 +110,15 @@ class Behaviors
     public static function validateRequirements(Struct $struct)
     {
         $requirements = Behaviors::getRequirements($struct);
-        array_walk($requirements, function ($field) use ($struct) {
+        $missing = [];
+        array_walk($requirements, function ($field) use ($struct, &$missing) {
             if ($struct->__get($field) === null) {
-                throw new StructException(
-                    sprintf(self::REQUIREMENT_ERROR, get_class($struct), $field));
+                $missing[] = $field;
             }
         });
+        if($missing) {
+            throw new StructException(
+                sprintf(self::REQUIREMENT_ERROR, get_class($struct), json_encode($missing)));
+        }
     }
 }

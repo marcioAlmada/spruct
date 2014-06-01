@@ -103,7 +103,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider missingPropotypeFieldProvider
      * @expectedException \Spruct\StructException
-     * @expectedExceptionMessage #^Cannot initialize ((\\?\w)+) with a null \w+$#
+     * @expectedExceptionMessage #^Cannot initialize ((\\?\w)+) with null \[("\w+",?)+\]?$#
      */
     public function testFieldRequirement($prototype)
     {
