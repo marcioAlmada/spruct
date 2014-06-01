@@ -111,6 +111,9 @@ class Employee extends \Spruct\Struct
     /** @struct.type string */
     protected $name;
 
+    /** @struct.type string */
+    protected $role;
+
     /** @struct.type integer */
     protected $age;
 }
@@ -120,7 +123,11 @@ Required fields are validated during struct initialization.
 If required fields are missing, a `\Spruct\StructException` is thrown.
 
 ```php
-new Employee(["age" => 21]) // Exception: Cannot initialize Employee with a null name
+new Employee([
+    'age' => 21
+]);
+
+// Exception: Cannot initialize Employee with null ["name", "role"]
 ```
 
 ## Contributing
