@@ -92,7 +92,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Spruct\StructException
-     * @expectedExceptionMessage #^Annotated type must be in \[((")\w+(?2),?)+\]$#
+     * @expectedExceptionMessage #^Annotated @struct.type must must be in \[((")\w+(?2),?)+\]$#
      */
     public function testInvalidFieldType()
     {

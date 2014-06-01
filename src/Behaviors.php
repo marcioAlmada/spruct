@@ -19,7 +19,7 @@ class Behaviors
 
     const VAL_ERROR   = 'Cannot use %s as type %s in field %s';
 
-    const TYPE_ERROR  = 'Annotated type must be in %s';
+    const TYPE_ERROR  = 'Annotated @struct.type must must be in %s';
 
     const REQUIREMENT_ERROR  = 'Cannot initialize %s with null %s';
 
