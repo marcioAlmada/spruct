@@ -31,7 +31,7 @@ class Behaviors
     {
         if ( ! property_exists($struct, $property)) {
             throw new StructException(
-                sprintf(self::FIELD_ERROR, get_class($struct), $property));
+                sprintf(self::FIELD_ERROR, get_class($struct), $property), 1);
         }
     }
 
@@ -67,7 +67,7 @@ class Behaviors
             }
 
             throw new StructException(
-                sprintf(self::TYPE_ERROR, json_encode(static::getTypeTokens())));
+                sprintf(self::TYPE_ERROR, json_encode(static::getTypeTokens())), 3);
         }
     }
 
@@ -109,7 +109,7 @@ class Behaviors
         }
 
         throw new StructException(
-            sprintf(self::VAL_ERROR, $type, $expected, $property));
+            sprintf(self::VAL_ERROR, $type, $expected, $property), 2);
     }
 
     public static function validateRequirements(Struct $struct)
@@ -121,9 +121,9 @@ class Behaviors
                 $missing[] = $field;
             }
         });
-        if($missing) {
+        if ($missing) {
             throw new StructException(
-                sprintf(self::REQUIREMENT_ERROR, get_class($struct), json_encode($missing)));
+                sprintf(self::REQUIREMENT_ERROR, get_class($struct), json_encode($missing)), 4);
         }
     }
 }

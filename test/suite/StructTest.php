@@ -26,6 +26,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Spruct\StructException
      * @expectedExceptionMessage #^((\\?\w)+)->undeclared undefined \(Type \1 has no field undeclared\)$#
+     * @expectedExceptionCode 1
      */
     public function testFieldAccessException()
     {
@@ -66,9 +67,10 @@ class StructTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider fieldAssignmentExceptionProvider
      * @expectedException \Spruct\StructException
      * @expectedExceptionMessage #^Cannot use ((\\?\w)+)(\(.{0,}\))? as type (?1) in field (?1)->\w+$#
-     * @dataProvider fieldAssignmentExceptionProvider
+     * @expectedExceptionCode 2
      */
     public function testFieldAssignmentException($property, $value)
     {
@@ -94,6 +96,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Spruct\StructException
      * @expectedExceptionMessage #^Annotated @struct.type must must be in \[((")\w+(?2),?)+\]$#
+     * @expectedExceptionCode 3
      */
     public function testInvalidFieldType()
     {
@@ -105,6 +108,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
      * @dataProvider missingPropotypeFieldProvider
      * @expectedException \Spruct\StructException
      * @expectedExceptionMessage #^Cannot initialize ((\\?\w)+) with null \[("\w+",?)+\]?$#
+     * @expectedExceptionCode 4
      */
     public function testFieldRequirement($prototype)
     {
@@ -123,6 +127,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Spruct\StructException
      * @expectedExceptionMessage has no field
+     * @expectedExceptionCode 1
      */
     public function testInvalidFieldRequirement()
     {
@@ -132,7 +137,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider invalidPrototypeDataProvider
      * @expectedException \Spruct\StructException
-     * @expectedExceptionMessage #^Cannot use ((\\?\w)+)(\(.{0,}\))? as type (?1) in field (?1)->\w+$#
+     * @expectedExceptionCode 2
      */
     public function testRequiredFieldType($prototype)
     {
