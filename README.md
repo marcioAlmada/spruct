@@ -93,9 +93,10 @@ $pointA->y = 1.5;
 Struct exception messages are pretty self explanatory `\Spruct\StructException`:
 
 ```php
-$pointB->visible = 'y' // Exception: Cannot use string(y) as type float in field visible
-$pointB->x = 1         // Exception: Cannot use integer(1) as type float in field x
-$pointB->y = []        // Exception: Cannot use array as type float in field y
+$pointB = new D2Point();
+$pointB->visible = 'y'; // ! Cannot use string(y) as type float in field D2Point->visible
+$pointB->x = 1;         // ! Cannot use integer(1) as type float in field D2Point->x
+$pointB->y = [];        // ! Cannot use array as type float in field D2Point->y
 ```
 
 ### Required Fields
@@ -104,7 +105,7 @@ You can also declare fields that must not be null using `@struct.requires` class
 
 ```php
 /**
- * @struct.requires name, age
+ * @struct.requires name, age, role
  */
 class Employee extends \Spruct\Struct
 {
@@ -123,11 +124,7 @@ Required fields are validated during struct initialization.
 If required fields are missing, a `\Spruct\StructException` is thrown.
 
 ```php
-new Employee([
-    'age' => 21
-]);
-
-// Exception: Cannot initialize Employee with null ["name", "role"]
+new Employee(['age' => 21]);  // ! Cannot initialize Employee with null ["name", "role"]
 ```
 
 ## Contributing
