@@ -4,8 +4,9 @@ namespace Spruct;
 
 use Spruct\Fixture\Point;
 use Spruct\Fixture\DerivedPoint;
-use Spruct\Fixture\InvalidStruct;
+use Spruct\Fixture\InvalidTypeStruct;
 use Spruct\Fixture\StructWithRequirement;
+use Spruct\Fixture\InvalidStructWithRequirement;
 
 /**
  * StructTest
@@ -96,7 +97,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidFieldType()
     {
-        $this->struct = new InvalidStruct();
+        $this->struct = new InvalidTypeStruct();
         $this->struct->wrong = '';
     }
 
@@ -120,6 +121,15 @@ class StructTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException \Spruct\StructException
+     * @expectedExceptionMessage has no field
+     */
+    public function testInvalidFieldRequirement()
+    {
+        new InvalidStructWithRequirement(['foo' => 'foo']);
+    }
+
+    /**
      * @dataProvider invalidPrototypeDataProvider
      * @expectedException \Spruct\StructException
      * @expectedExceptionMessage #^Cannot use ((\\?\w)+)(\(.{0,}\))? as type (?1) in field (?1)->\w+$#
@@ -140,4 +150,5 @@ class StructTest extends \PHPUnit_Framework_TestCase
             [['name' => 1.1,  'description' => 'valid']],
         ];
     }
+
 }
