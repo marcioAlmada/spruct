@@ -23,6 +23,10 @@ class Behaviors
 
     const REQUIREMENT_ERROR  = 'Cannot initialize %s with null %s';
 
+    const ANNOTATION_TYPE = 'struct.type';
+
+    const ANNOTATION_REQUIRES = 'struct.requires';
+
     public static function validateField(Struct $struct, $property)
     {
         if ( ! property_exists($struct, $property)) {
@@ -44,7 +48,7 @@ class Behaviors
 
     public static function getPropertyType(Struct $struct, $property)
     {
-        $type = Meta::getPropertyAnnotations($struct, $property)->get('struct.type');
+        $type = Meta::getPropertyAnnotations($struct, $property)->get(self::ANNOTATION_TYPE);
 
         return static::findTypeToken($type);
     }
@@ -73,7 +77,7 @@ class Behaviors
 
     public static function getRequirements(Struct $struct)
     {
-        $requirements = Meta::getClassAnnotations($struct)->get('struct.requires');
+        $requirements = Meta::getClassAnnotations($struct)->get(self::ANNOTATION_REQUIRES);
         if (is_string($requirements)) {
             $requirements = array_map('trim', explode(',', $requirements));
         } else {
