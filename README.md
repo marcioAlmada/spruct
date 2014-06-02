@@ -16,12 +16,12 @@ Spruct gives you a clean PHP struct implementation with optional strong typed fi
 ```json
 {
   "require": {
-    "spruct/spruct": "dev-master"
+    "spruct/spruct": "~1.0"
   }
 }
 ```
 
-Through terminal: `composer require spruct/spruct:dev-master` :8ball:
+Through terminal: `composer require spruct/spruct:~1.0` :8ball:
 
 
 ## Usage
