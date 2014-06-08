@@ -67,10 +67,10 @@ class StructTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider fieldAssignmentExceptionProvider
      * @expectedException \Spruct\StructException
      * @expectedExceptionMessage #^Cannot use ((\\?\w)+)(\(.{0,}\))? as type (?1) in field (?1)->\w+$#
      * @expectedExceptionCode 2
+     * @dataProvider fieldAssignmentExceptionProvider
      */
     public function testFieldAssignmentException($property, $value)
     {
@@ -105,10 +105,10 @@ class StructTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider missingPropotypeFieldProvider
      * @expectedException \Spruct\StructException
      * @expectedExceptionMessage #^Cannot initialize ((\\?\w)+) with null \[("\w+",?)+\]?$#
      * @expectedExceptionCode 4
+     * @dataProvider missingPropotypeFieldProvider
      */
     public function testFieldRequirement($prototype)
     {
@@ -145,9 +145,9 @@ class StructTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider invalidPrototypeDataProvider
      * @expectedException \Spruct\StructException
      * @expectedExceptionCode 2
+     * @dataProvider invalidPrototypeDataProvider
      */
     public function testRequiredFieldType($prototype)
     {
