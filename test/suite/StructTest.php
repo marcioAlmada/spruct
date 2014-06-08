@@ -83,7 +83,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
             ['visible', 1],
             ['visible', 'yes'],
             ['visible', ''], // empty string
-            ['visible', 'some # random % !    (string) '], // empty string
+            ['visible', 'some # random % !    (string) '],
             ['x', 1],
             ['y', 0],
             ['group', 1.0],
@@ -122,6 +122,16 @@ class StructTest extends \PHPUnit_Framework_TestCase
             [['description' => 'foo']],
             [['name' => 'bar']],
         ];
+    }
+
+    /**
+     * @expectedException \Spruct\StructException
+     * @expectedExceptionCode 2
+     */
+    public function testPostInitializationFieldRequirement()
+    {
+        $this->assertNull($this->struct->x);
+        $this->struct->x = null;
     }
 
     /**
