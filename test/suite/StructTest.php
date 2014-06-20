@@ -70,7 +70,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Spruct\StructException
-     * @expectedExceptionMessage #^Cannot use ((\\?\w)+)(\(.{0,}\))? as (type|a match for) .+ in field (?1)->\w+$#
+     * @expectedExceptionMessage #^Cannot use ((\\?\w)+)(\(.{0,}\))? as type .+ in field (?1)->\w+$#
      * @expectedExceptionCode 2
      * @dataProvider fieldAssignmentExceptionProvider
      */
@@ -94,6 +94,8 @@ class StructTest extends \PHPUnit_Framework_TestCase
             ['name', 'AA'],
             ['name', 'A1A'],
             ['name', 'a1'],
+            ['name', []],
+            ['name',  new \stdClass()],
             ['previous', new \stdClass()],
         ];
     }

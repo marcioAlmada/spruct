@@ -104,7 +104,7 @@ class Behaviors
 
         if ($type === $expected ||
             $value instanceof $expected ||
-            1 === ($match = self::pregMatchSafe($expected, $value))) {
+            (is_string($value) && 1 === self::pregMatchSafe($expected, $value))) {
             return true;
         }
 
@@ -115,7 +115,7 @@ class Behaviors
         }
 
         throw new StructException(
-            sprintf(0 === $match ? self::VAL_MATCH_ERROR : self::VAL_ERROR, $type, $expected, $property), 2);
+            sprintf(self::VAL_ERROR, $type, $expected, $property), 2);
     }
 
     public static function validateRequirements(Struct $struct)
