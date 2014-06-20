@@ -96,12 +96,6 @@ class Behaviors
     {
         $type = gettype($value);
 
-        if ('object' === $type) {
-            if (0 !== strpos($expected, '\\')) {
-                $expected =  '\\' . $expected;
-            }
-        }
-
         if ($type === $expected ||
             $value instanceof $expected ||
             (is_string($value) && 1 === self::pregMatchSafe($expected, $value))) {
