@@ -13,6 +13,8 @@ class Behaviors
         'string'  => ['string',  'str'],
         'array'   => ['array'],
         'object'  => ['object'],
+        '<class>' => [],
+        '<regex>' => [],
     ];
 
     const FIELD_ERROR = '%1$s->%2$s undefined (Type %1$s has no field %2$s)';
@@ -21,7 +23,7 @@ class Behaviors
 
     const VAL_MATCH_ERROR  = 'Cannot use %s as a match for %s in field %s';
 
-    const TYPE_ERROR  = 'Annotated @struct.type must must be in %s';
+    const TYPE_ERROR  = 'Annotated @struct.type must be in %s';
 
     const REQUIREMENT_ERROR  = 'Cannot initialize %s with null %s';
 
@@ -59,7 +61,7 @@ class Behaviors
     public static function findTypeToken($type)
     {
         if ( null !== $type && is_string($type)) {
-            if (false !== strpos($type, '\\')) {
+            if (false !== self::pregMatchSafe($type, '') || false !== strpos($type, '\\')) {
                 return $type;
             }
             foreach (static::$types as $token => $types) {
