@@ -61,7 +61,7 @@ class Behaviors
     public static function findTypeToken($type)
     {
         if ( null !== $type && is_string($type)) {
-            if (false !== self::pregMatchSafe($type, '') || false !== strpos($type, '\\')) {
+            if (false !== self::pregMatchSafe($type, '') || class_exists($type)) {
                 return $type;
             }
             foreach (static::$types as $token => $types) {

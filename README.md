@@ -119,7 +119,7 @@ class Employee extends \Spruct\Struct
     /** @struct.type integer */
     protected $age;
 
-    /** @struct.type #^123456\d{8}$# */
+    /** @struct.type #^\d{8}$# */
     protected $code;
 }
 ```
