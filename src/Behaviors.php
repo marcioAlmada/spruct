@@ -19,6 +19,8 @@ class Behaviors
 
     const VAL_ERROR   = 'Cannot use %s as type %s in field %s';
 
+    const VAL_MATCH_ERROR  = 'Cannot use %s as a match for %s in field %s';
+
     const TYPE_ERROR  = 'Annotated @struct.type must must be in %s';
 
     const REQUIREMENT_ERROR  = 'Cannot initialize %s with null %s';
@@ -98,7 +100,9 @@ class Behaviors
             }
         }
 
-        if ($value instanceof $expected || $type === $expected) {
+        if ($type === $expected ||
+            $value instanceof $expected ||
+            1 === ($match = self::pregMatchSafe($expected, $value))) {
             return true;
         }
 
@@ -109,7 +113,7 @@ class Behaviors
         }
 
         throw new StructException(
-            sprintf(self::VAL_ERROR, $type, $expected, $property), 2);
+            sprintf(0 === $match ? self::VAL_MATCH_ERROR : self::VAL_ERROR, $type, $expected, $property), 2);
     }
 
     public static function validateRequirements(Struct $struct)
@@ -125,5 +129,44 @@ class Behaviors
             throw new StructException(
                 sprintf(self::REQUIREMENT_ERROR, get_class($struct), json_encode($missing)), 4);
         }
+    }
+
+    /**
+     * Registers a one time self-destructing error handler
+     * @param  integer   $severity PHP predefined error constant
+     * @link http://www.php.net/manual/en/errorfunc.constants.php
+     * @throws Exception if event of specified severity is emitted
+     */
+    public static function handleErrorOnce($severity = E_WARNING)
+    {
+        $terminator = function () {
+            static $expired = false;
+            if (! $expired) {
+                $expired = true;
+                // cleans temporary error handler
+                return restore_error_handler();
+            }
+        };
+
+        set_error_handler(function ($errno, $errstr) use ($severity, $terminator) {
+            if ($errno === $severity) {
+                $terminator(); // bye
+
+                return;
+            }
+
+            return false;
+        });
+
+        return $terminator;
+    }
+
+    public static function pregMatchSafe($pattern , $subject, $matches = null, $flags = 0, $offset = 0)
+    {
+        $handler_terminator = static::handleErrorOnce(E_WARNING);
+        $match = preg_match($pattern, $subject, $matches, $flags, $offset);
+        $handler_terminator(); // cleaning
+
+        return $match;
     }
 }

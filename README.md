@@ -67,6 +67,7 @@ through the `@struct.type` property annotation:
 |double  | `double`, `float` | `/** @struct.type float */`
 |array   | `array`           | `/** @struct.type array */`
 |Class   | full qualified class name | `/** @struct.type \Some\Existing\Class */`
+|regex   | a valid regex expression  | `/** @struct.type #^\w{3}\d+$# */`
 
 ### Initializing Structs
 
@@ -117,6 +118,9 @@ class Employee extends \Spruct\Struct
 
     /** @struct.type integer */
     protected $age;
+
+    /** @struct.type #^123456\d{8}$# */
+    protected $code;
 }
 ```
 

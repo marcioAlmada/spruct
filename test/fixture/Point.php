@@ -25,6 +25,9 @@ class Point extends \Spruct\Struct
     /** @struct.type Spruct\Fixture\Point */
     protected $previous;
 
+    /** @struct.type #^[A-Z]\d+$# */
+    protected $name;
+
     /** Any data type fits here */
     protected $weak;
 

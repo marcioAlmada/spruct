@@ -55,6 +55,8 @@ class StructTest extends \PHPUnit_Framework_TestCase
             ['next', new Point(), 'object'],
             ['previous', new Point(), 'object'],
             ['previous', new DerivedPoint(), 'object'],
+            ['name', 'A1', 'string'],
+            ['name', 'B12', 'string'],
             ['weak', [], 'array']
         ];
     }
@@ -68,7 +70,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Spruct\StructException
-     * @expectedExceptionMessage #^Cannot use ((\\?\w)+)(\(.{0,}\))? as type (?1) in field (?1)->\w+$#
+     * @expectedExceptionMessage #^Cannot use ((\\?\w)+)(\(.{0,}\))? as (type|a match for) .+ in field (?1)->\w+$#
      * @expectedExceptionCode 2
      * @dataProvider fieldAssignmentExceptionProvider
      */
@@ -89,6 +91,9 @@ class StructTest extends \PHPUnit_Framework_TestCase
             ['group', 1.0],
             ['description', true],
             ['next', new \stdClass()],
+            ['name', 'AA'],
+            ['name', 'A1A'],
+            ['name', 'a1'],
             ['previous', new \stdClass()],
         ];
     }
