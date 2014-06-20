@@ -20,5 +20,10 @@
         "psr-4": {
             "Spruct\\": "src/"
         }
+    },
+    "autoload-dev" : {
+        "psr-4": {
+            "Spruct\\Fixture\\": "test/fixture/"
+        }
     }
 }
