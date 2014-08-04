@@ -25,7 +25,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Spruct\StructException
-     * @expectedExceptionMessage #^((\\?\w)+)->undeclared undefined \(Type \1 has no field undeclared\)$#
+     * @expectedExceptionMessageRegExp #^((\\?\w)+)->undeclared undefined \(Type \1 has no field undeclared\)$#
      * @expectedExceptionCode 1
      */
     public function testFieldAccessException()
@@ -70,7 +70,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Spruct\StructException
-     * @expectedExceptionMessage #^Cannot use ((\\?\w)+)(\(.{0,}\))? as type .+ in field (?1)->\w+$#
+     * @expectedExceptionMessageRegExp #^Cannot use ((\\?\w)+)(\(.{0,}\))? as type .+ in field (?1)->\w+$#
      * @expectedExceptionCode 2
      * @dataProvider fieldAssignmentExceptionProvider
      */
@@ -102,7 +102,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Spruct\StructException
-     * @expectedExceptionMessage #^Annotated @struct.type must be in \[((").+(?2),?)+\]$#
+     * @expectedExceptionMessageRegExp #^Annotated @struct.type must be in \[((").+(?2),?)+\]$#
      * @expectedExceptionCode 3
      */
     public function testInvalidFieldType()
@@ -113,7 +113,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Spruct\StructException
-     * @expectedExceptionMessage #^Cannot initialize ((\\?\w)+) with null \[("\w+",?)+\]?$#
+     * @expectedExceptionMessageRegExp #^Cannot initialize ((\\?\w)+) with null \[("\w+",?)+\]?$#
      * @expectedExceptionCode 4
      * @dataProvider missingPropotypeFieldProvider
      */
