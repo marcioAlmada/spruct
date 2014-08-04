@@ -3,6 +3,7 @@
 namespace Spruct;
 
 use Minime\Annotations\Facade as Meta;
+use RegexGuard\Factory as RegexGuard;
 
 abstract class Behaviors extends Struct
 {
@@ -61,7 +62,8 @@ abstract class Behaviors extends Struct
     protected static function findTypeToken($type)
     {
         if ( null !== $type && is_string($type)) {
-            if (false !== self::pregMatchSafe($type, '') || class_exists($type)) {
+            $regexGuard = RegexGuard::getGuard();
+            if (class_exists($type) || false !== $regexGuard->isRegexValid($type)) {
                 return $type;
             }
             foreach (static::$types as $token => $types) {
@@ -95,10 +97,11 @@ abstract class Behaviors extends Struct
     protected static function validatePropertyType($expected, $property, $value)
     {
         $type = gettype($value);
+        $regexGuard = RegexGuard::getGuard()->throwOnError(false);
 
         if ($type === $expected ||
             $value instanceof $expected ||
-            (is_string($value) && 1 === self::pregMatchSafe($expected, $value))) {
+            (is_string($value) && 1 === $regexGuard->match($expected, $value))) {
             return true;
         }
 
@@ -125,44 +128,5 @@ abstract class Behaviors extends Struct
             throw new StructException(
                 sprintf(self::REQUIREMENT_ERROR, get_class($struct), json_encode($missing)), 4);
         }
-    }
-
-    /**
-     * Registers a one time self-destructing error handler
-     * @param  integer   $severity PHP predefined error constant
-     * @link http://www.php.net/manual/en/errorfunc.constants.php
-     * @throws Exception if event of specified severity is emitted
-     */
-    protected static function handleErrorOnce($severity = E_WARNING)
-    {
-        $terminator = function () {
-            static $expired = false;
-            if (! $expired) {
-                $expired = true;
-                // cleans temporary error handler
-                return restore_error_handler();
-            }
-        };
-
-        set_error_handler(function ($errno, $errstr) use ($severity, $terminator) {
-            if ($errno === $severity) {
-                $terminator(); // bye
-
-                return;
-            }
-
-            return false;
-        });
-
-        return $terminator;
-    }
-
-    protected static function pregMatchSafe($pattern , $subject, $matches = null, $flags = 0, $offset = 0)
-    {
-        $handler_terminator = static::handleErrorOnce(E_WARNING);
-        $match = preg_match($pattern, $subject, $matches, $flags, $offset);
-        $handler_terminator(); // cleaning
-
-        return $match;
     }
 }
