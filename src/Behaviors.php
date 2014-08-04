@@ -4,7 +4,7 @@ namespace Spruct;
 
 use Minime\Annotations\Facade as Meta;
 
-class Behaviors
+abstract class Behaviors extends Struct
 {
     protected static $types = [
         'boolean' => ['boolean', 'bool'],
@@ -31,7 +31,7 @@ class Behaviors
 
     const ANNOTATION_REQUIRES = 'struct.requires';
 
-    public static function validateField(Struct $struct, $property)
+    protected static function validateField(Struct $struct, $property)
     {
         if ( ! property_exists($struct, $property)) {
             throw new StructException(
@@ -39,7 +39,7 @@ class Behaviors
         }
     }
 
-    public static function strict(Struct $struct, $property, $value)
+    protected static function strict(Struct $struct, $property, $value)
     {
         static::validateField($struct, $property);
         $type = static::getPropertyType($struct, $property);
@@ -51,14 +51,14 @@ class Behaviors
         return $value;
     }
 
-    public static function getPropertyType(Struct $struct, $property)
+    protected static function getPropertyType(Struct $struct, $property)
     {
         $type = Meta::getPropertyAnnotations($struct, $property)->get(self::ANNOTATION_TYPE);
 
         return static::findTypeToken($type);
     }
 
-    public static function findTypeToken($type)
+    protected static function findTypeToken($type)
     {
         if ( null !== $type && is_string($type)) {
             if (false !== self::pregMatchSafe($type, '') || class_exists($type)) {
@@ -75,12 +75,12 @@ class Behaviors
         }
     }
 
-    public static function getTypeTokens()
+    protected static function getTypeTokens()
     {
         return array_keys(static::$types);
     }
 
-    public static function getRequirements(Struct $struct)
+    protected static function getRequirements(Struct $struct)
     {
         $requirements = Meta::getClassAnnotations($struct)->get(self::ANNOTATION_REQUIRES);
         if (is_string($requirements)) {
@@ -92,7 +92,7 @@ class Behaviors
         return $requirements;
     }
 
-    public static function validatePropertyType($expected, $property, $value)
+    protected static function validatePropertyType($expected, $property, $value)
     {
         $type = gettype($value);
 
@@ -112,7 +112,7 @@ class Behaviors
             sprintf(self::VAL_ERROR, $type, $expected, $property), 2);
     }
 
-    public static function validateRequirements(Struct $struct)
+    protected static function validateRequirements(Struct $struct)
     {
         $requirements = Behaviors::getRequirements($struct);
         $missing = [];
@@ -133,7 +133,7 @@ class Behaviors
      * @link http://www.php.net/manual/en/errorfunc.constants.php
      * @throws Exception if event of specified severity is emitted
      */
-    public static function handleErrorOnce($severity = E_WARNING)
+    protected static function handleErrorOnce($severity = E_WARNING)
     {
         $terminator = function () {
             static $expired = false;
@@ -157,7 +157,7 @@ class Behaviors
         return $terminator;
     }
 
-    public static function pregMatchSafe($pattern , $subject, $matches = null, $flags = 0, $offset = 0)
+    protected static function pregMatchSafe($pattern , $subject, $matches = null, $flags = 0, $offset = 0)
     {
         $handler_terminator = static::handleErrorOnce(E_WARNING);
         $match = preg_match($pattern, $subject, $matches, $flags, $offset);
