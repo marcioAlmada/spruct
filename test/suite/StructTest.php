@@ -100,6 +100,17 @@ class StructTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+
+    /**
+     * @expectedException \Spruct\StructException
+     * @expectedExceptionMessageRegExp #^Cannot use string\(A\) as type#
+     * @expectedExceptionCode 2
+     */
+    public function testInicializationOfInvalidValueOnRegexField()
+    {
+        new Point(['name' => 'A']);
+    }
+
     /**
      * @expectedException \Spruct\StructException
      * @expectedExceptionMessageRegExp #^Annotated @struct.type must be in \[((").+(?2),?)+\]$#
