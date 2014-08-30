@@ -106,7 +106,7 @@ class StructTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionMessageRegExp #^Cannot use string\(A\) as type#
      * @expectedExceptionCode 2
      */
-    public function testInicializationOfInvalidValueOnRegexField()
+    public function testInitializationOfInvalidValueOnRegexField()
     {
         new Point(['name' => 'A']);
     }
