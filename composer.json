@@ -15,7 +15,7 @@
         "php": ">=5.4",
         "ext-json":"*",
         "minime/annotations": "~1.12",
-        "regex-guard/regex-guard": "dev-master"
+        "regex-guard/regex-guard": "~1.0"
     },
     "autoload": {
         "psr-4": {
