@@ -2,11 +2,18 @@
 
 namespace Spruct;
 
-use Minime\Annotations\Facade as Meta;
+use Minime\Annotations\Reader as Meta;
 use RegexGuard\Factory as RegexGuard;
 
 abstract class Behaviors extends Struct
 {
+    /**
+     * Metadata reader
+     *
+     * @var \Minime\Annotations\Reader
+     */
+    protected static $meta;
+
     protected static $types = [
         'boolean' => ['boolean', 'bool'],
         'double'  => ['double',  'float'],
@@ -54,7 +61,7 @@ abstract class Behaviors extends Struct
 
     protected static function getPropertyType(Struct $struct, $property)
     {
-        $type = Meta::getPropertyAnnotations($struct, $property)->get(self::ANNOTATION_TYPE);
+        $type = static::meta()->getPropertyAnnotations($struct, $property)->get(self::ANNOTATION_TYPE);
 
         return static::findTypeToken($type);
     }
@@ -84,7 +91,7 @@ abstract class Behaviors extends Struct
 
     protected static function getRequirements(Struct $struct)
     {
-        $requirements = Meta::getClassAnnotations($struct)->get(self::ANNOTATION_REQUIRES);
+        $requirements = static::meta()->getClassAnnotations($struct)->get(self::ANNOTATION_REQUIRES);
         if (is_string($requirements)) {
             $requirements = array_map('trim', explode(',', $requirements));
         } else {
@@ -128,5 +135,14 @@ abstract class Behaviors extends Struct
             throw new StructException(
                 sprintf(self::REQUIREMENT_ERROR, get_class($struct), json_encode($missing)), 4);
         }
+    }
+
+    public static function meta()
+    {
+        if(! isset(static::$meta)){
+            static::$meta = Meta::createFromDefaults();
+        }
+
+        return static::$meta;
     }
 }

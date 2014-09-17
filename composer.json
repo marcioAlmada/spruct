@@ -14,7 +14,7 @@
     "require": {
         "php": ">=5.4",
         "ext-json":"*",
-        "minime/annotations": "~1.12",
+        "minime/annotations": "~2.0",
         "regex-guard/regex-guard": "~1.0"
     },
     "autoload": {
