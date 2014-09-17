@@ -7,6 +7,7 @@ Spruct
 [![Latest Stable Version](https://poser.pugx.org/spruct/spruct/v/stable.svg)](https://packagist.org/packages/spruct/spruct)
 [![Total Downloads](https://poser.pugx.org/spruct/spruct/downloads.svg)](https://packagist.org/packages/spruct/spruct)
 [![License](https://poser.pugx.org/spruct/spruct/license.svg)](https://packagist.org/packages/spruct/spruct)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/131c32db-3843-4ea2-8cb5-ceb52de22301/mini.png)](https://insight.sensiolabs.com/projects/131c32db-3843-4ea2-8cb5-ceb52de22301)
 
 Spruct gives you a clean PHP struct implementation with optional strong typed fields.
 
