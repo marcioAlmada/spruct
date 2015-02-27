@@ -10,7 +10,7 @@ abstract class Behaviors extends Struct
     /**
      * Metadata reader
      *
-     * @var \Minime\Annotations\Reader
+     * @var \Minime\Annotations\Interfaces\ReaderInterface
      */
     protected static $meta;
 
